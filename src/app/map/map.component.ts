@@ -55,8 +55,9 @@ export class MapComponent implements AfterViewInit {
   }
 
   constructor(service: DataService) {
-    this.points = service.getStations();
-    console.log(this.points);
+    this.points = service.getStations().subscribe(data => {
+      console.log(data);
+    });
   }
 
   ngAfterViewInit(): void {

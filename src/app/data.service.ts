@@ -14,7 +14,7 @@ export class DataService {
     return this.http.get<Station[]>(this.operationsUrl);
   }
   constructor(private http: HttpClient) {
-    this.operationsUrl = 'http://127.0.0.1:5000/api/all';
+    this.operationsUrl = 'http://localhost:8080/stations';
   }
 }
 
