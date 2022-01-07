@@ -11,11 +11,21 @@ import {DataService} from "../data.service";
 export class MapComponent implements AfterViewInit {
   private map: any;
   private points: any;
+  private fillColor: any;
+
+  private selectColor(name: string): void {
+    // this.fillColor = '#f03';
+    if (name.startsWith('W')){
+      this.fillColor = '#00f'
+    }
+    else {
+      this.fillColor = '#f03';
+    }
+  }
 
   private addMarker(code: any, lat: any, lng: any): void {
     L.circle([lat,lng], {
-      color: 'red',
-      fillColor: '#f03',
+      color: this.fillColor,
       fillOpacity: 0.5,
       radius: 100
     }).bindPopup(code).openPopup().addTo(this.map);
@@ -30,6 +40,7 @@ export class MapComponent implements AfterViewInit {
 
     this.points.forEach((point: any[]) => {
       point.forEach((station: any) => {
+        this.selectColor(station.name);
         this.addMarker(station.name, station.gegrLat, station.gegrLon);
       })
     });
