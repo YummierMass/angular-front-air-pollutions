@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 import {DataService} from "../data.service";
+import {StationIndex} from "../data.service";
 
 @Component({
   selector: 'app-map',
@@ -13,13 +14,34 @@ export class MapComponent implements AfterViewInit {
   private points: any;
   private fillColor: any;
 
-  private selectColor(name: string): void {
+  private selectColor(stIndex: StationIndex): void {
     // this.fillColor = '#f03';
-    if (name.startsWith('W')){
-      this.fillColor = '#00f'
+    let stIndexId: number;
+
+    if (stIndex){
+      stIndexId = stIndex.id;
+    }
+    else{
+      stIndexId = -2;
+    }
+
+    if (stIndexId == 0){
+      this.fillColor = '#34640d'
+    }
+    else if (stIndexId == 1){
+      this.fillColor = '#b1ec4a'
+    }
+    else if (stIndexId == 2){
+      this.fillColor = '#e8d927'
+    }
+    else if (stIndexId == 3){
+      this.fillColor = '#e58100'
+    }
+    else if (stIndexId == 4){
+      this.fillColor = '#f03'
     }
     else {
-      this.fillColor = '#f03';
+      this.fillColor = '#000000';
     }
   }
 
@@ -27,7 +49,7 @@ export class MapComponent implements AfterViewInit {
     L.circle([lat,lng], {
       color: this.fillColor,
       fillOpacity: 0.5,
-      radius: 100
+      radius: 200
     }).bindPopup(code).openPopup().addTo(this.map);
   }
 
@@ -40,7 +62,7 @@ export class MapComponent implements AfterViewInit {
 
     this.points.forEach((point: any[]) => {
       point.forEach((station: any) => {
-        this.selectColor(station.name);
+        this.selectColor(station.stIndex);
         this.addMarker(station.name, station.gegrLat, station.gegrLon);
       })
     });
@@ -60,5 +82,4 @@ export class MapComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.initMap();
   }
-
 }

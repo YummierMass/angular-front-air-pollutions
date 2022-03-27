@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -13,6 +13,7 @@ export class DataService {
   getStations(): Observable<Station[]> {
     return this.http.get<Station[]>(this.operationsUrl);
   }
+
   constructor(private http: HttpClient) {
     this.operationsUrl = 'http://localhost:8080/stations';
   }
@@ -25,9 +26,15 @@ export interface Station {
   gegrLat: string,
   gegrLon: string,
   stationName: string
+  stIndex: StationIndex
 }
 
 interface City {
   id: number,
   name: string,
+}
+
+export interface StationIndex {
+  id: number,
+  name: string
 }
